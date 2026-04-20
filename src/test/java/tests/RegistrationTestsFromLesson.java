@@ -38,7 +38,6 @@ public class RegistrationTestsFromLesson {
                 .statusCode(201)
                 .body("username", is(username))
                 .body("id", notNullValue());
-
     }
 
     @Test
