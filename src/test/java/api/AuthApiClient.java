@@ -1,17 +1,14 @@
 package api;
 
-import io.qameta.allure.Step;
 import models.LoginBodyModel;
 import models.SuccessfulLoginResponseModel;
 import models.WrongCredentialsLoginResponseModel;
-import models.LogoutBodyModel;
 
 import static io.restassured.RestAssured.given;
 import static specs.LoginSpec.loginRequestSpec;
 import static specs.LoginSpec.successfulLoginResponseSpec;
 import static specs.LoginSpec.wrongCredentialsLoginResponseSpec;
-import static specs.LogoutSpec.logoutRequestSpec;
-import static specs.LogoutSpec.successfulLogoutResponseSpec;
+
 
 public class AuthApiClient {
 
@@ -26,18 +23,6 @@ public class AuthApiClient {
                 .as(SuccessfulLoginResponseModel.class);
     }
 
-    @Step("Авторизация и получение токена")
-    public String loginAndGetRefreshToken(LoginBodyModel loginBody) {
-        return given(loginRequestSpec)
-                .body(loginBody)
-                .when()
-                .post("/auth/token/")
-                .then()
-                .spec(successfulLoginResponseSpec)
-                .extract()
-                .path("refresh");
-    }
-
     public WrongCredentialsLoginResponseModel loginWrongCredentials(LoginBodyModel loginBody) {
         return given(loginRequestSpec)
                 .body(loginBody)
@@ -49,13 +34,4 @@ public class AuthApiClient {
                 .as(WrongCredentialsLoginResponseModel.class);
     }
 
-    @Step("Отправка запроса logout")
-    public void logout(LogoutBodyModel logoutBody) {
-        given(logoutRequestSpec)
-                .body(logoutBody)
-                .when()
-                .post("/auth/logout/")
-                .then()
-                .spec(successfulLogoutResponseSpec);
-    }
 }

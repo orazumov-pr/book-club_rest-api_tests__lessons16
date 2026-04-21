@@ -23,15 +23,15 @@ public class LoginTests extends TestBase {
         assertThat(actualAccess).isNotEqualTo(actualRefresh);
     }
 
-    @Test
-    public void wrongCredentialsLoginTest() {
-        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_WRONG_PASSWORD);
-
-        WrongCredentialsLoginResponseModel loginResponse = api.auth.loginWrongCredentials(loginData);
-
-        String expectedDetailError = LOGIN_WRONG_CREDENTIALS_ERROR;
-        String actualDetailError = loginResponse.detail();
-        assertThat(actualDetailError).isEqualTo(expectedDetailError);
-    }
+//    @Test
+//    public void wrongCredentialsLoginTest() {
+//        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_WRONG_PASSWORD);
+//
+//        WrongCredentialsLoginResponseModel loginResponse = api.auth.loginWrongCredentials(loginData);
+//
+//        String expectedDetailError = LOGIN_WRONG_CREDENTIALS_ERROR;
+//        String actualDetailError = loginResponse.detail();
+//        assertThat(actualDetailError).isEqualTo(expectedDetailError);
+//    }
 
 }

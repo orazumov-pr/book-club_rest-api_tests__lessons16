@@ -15,7 +15,8 @@ dependencies {
             'org.junit.jupiter:junit-jupiter',
             'io.rest-assured:rest-assured:6.0.0',
             'tools.jackson.core:jackson-databind:3.1.0',
-            'org.assertj:assertj-core:3.27.7'
+            'org.assertj:assertj-core:3.27.7',
+            'io.rest-assured:json-schema-validator:6.0.0'
     )
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'com.github.javafaker:javafaker:1.0.2'
