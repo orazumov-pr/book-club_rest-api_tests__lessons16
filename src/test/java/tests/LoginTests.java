@@ -2,7 +2,6 @@ package tests;
 
 import models.LoginBodyModel;
 import models.SuccessfulLoginResponseModel;
-import models.WrongCredentialsLoginResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,16 +21,5 @@ public class LoginTests extends TestBase {
         assertThat(actualRefresh).startsWith(LOGIN_TOKEN_PREFIX);
         assertThat(actualAccess).isNotEqualTo(actualRefresh);
     }
-
-//    @Test
-//    public void wrongCredentialsLoginTest() {
-//        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_WRONG_PASSWORD);
-//
-//        WrongCredentialsLoginResponseModel loginResponse = api.auth.loginWrongCredentials(loginData);
-//
-//        String expectedDetailError = LOGIN_WRONG_CREDENTIALS_ERROR;
-//        String actualDetailError = loginResponse.detail();
-//        assertThat(actualDetailError).isEqualTo(expectedDetailError);
-//    }
 
 }

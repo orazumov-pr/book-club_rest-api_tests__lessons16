@@ -3,11 +3,10 @@ package api;
 import models.*;
 
 import static io.restassured.RestAssured.given;
+import static specs.BaseSpec.baseRequestSpec;
 import static specs.LoginSpec.loginRequestSpec;
 import static specs.LoginSpec.successfulLoginResponseSpec;
-import static specs.LoginSpec.wrongCredentialsLoginResponseSpec;
-import static specs.LogoutSpec.logoutRequestSpec;
-import static specs.LogoutSpec.successfulLogoutResponseSpec;
+import static specs.LogoutSpec.*;
 
 
 public class AuthApiClient {
@@ -38,7 +37,7 @@ public class AuthApiClient {
     }
 
     public void logout(LogoutBodyModel logoutBody) {
-        given(logoutRequestSpec)
+        given(baseRequestSpec)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)
@@ -47,7 +46,7 @@ public class AuthApiClient {
     }
 
     public LogoutErrorResponseModel logoutWithError(LogoutBodyModel logoutBody, int expectedStatusCode) {
-        return given(logoutRequestSpec)
+        return given(baseRequestSpec)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)
@@ -58,7 +57,7 @@ public class AuthApiClient {
     }
 
     public LogoutValidationErrorResponseModel logoutWithValidationError(LogoutBodyModel logoutBody) {
-        return given(logoutRequestSpec)
+        return given(baseRequestSpec)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)

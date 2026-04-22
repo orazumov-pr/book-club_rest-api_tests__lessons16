@@ -16,16 +16,12 @@ public class LogoutNegativeTests extends TestBase {
 
 
     private AuthApiClient api;
-    private String validRefreshToken;
 
     @BeforeEach
     void LogoutSetUp() {
         api = new AuthApiClient();
-        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_PASSWORD);
-        validRefreshToken = api.loginAndGetRefreshToken(loginData);
     }
 
-    // ========== ТЕСТЫ С НЕВАЛИДНЫМИ ТОКЕНАМИ ==========
 
     @Test
     @DisplayName("Логаут с невалидным refresh токеном должен вернуть 401")
