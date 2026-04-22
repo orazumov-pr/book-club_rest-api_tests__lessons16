@@ -10,6 +10,6 @@ public class TestBase {
 
     @BeforeAll
     public static void setUp() {
-        RestAssured.baseURI = "https://book-club.qa.guru/api/v1";
+        RestAssured.baseURI = "https://book-club.qa.guru";
         }
 }

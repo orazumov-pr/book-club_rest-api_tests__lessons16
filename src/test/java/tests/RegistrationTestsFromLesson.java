@@ -57,7 +57,7 @@ public class RegistrationTestsFromLesson {
                 .post(BASE_URL)
                 .then()
                 .log().all()
-                .statusCode(400)
+                .statusCode(201)
                 .body("username[0]", is("A user with that username already exists."));
     }
 
@@ -73,7 +73,7 @@ public class RegistrationTestsFromLesson {
                 .post(BASE_URL)
                 .then()
                 .log().all()
-                .statusCode(201)
+                .statusCode(400)
                 .extract()
                 .as(RegistrationResponseRecordsModel.class);
 

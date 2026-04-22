@@ -13,7 +13,8 @@ public class RegistrationSpecs {
 
     public static RequestSpecification registrationRequestSpec = with()
             .log().all()
-            .contentType(ContentType.JSON);
+            .contentType(ContentType.JSON)
+            .basePath("/api/v1");
 
     public static ResponseSpecification error400ResponseSpec = new ResponseSpecBuilder()
             .log(ALL)

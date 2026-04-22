@@ -22,14 +22,6 @@ public class LoginSpec {
             .expectBody("refresh", notNullValue())
             .build();
 
-    public static ResponseSpecification wrongCredentialsLoginResponseSpec = new ResponseSpecBuilder()
-            .log(ALL)
-            .expectStatusCode(401)
-            .expectBody(matchesJsonSchemaInClasspath(
-                    "schemas/login/wrong_credentials_login_response_schema.json"))
-            .expectBody("detail", notNullValue())
-            .build();
-
     public static ResponseSpecification unauthorizedResponseSpec = new ResponseSpecBuilder()
             .log(ALL)
             .expectStatusCode(401)

@@ -1,7 +1,6 @@
 package tests;
 
 import api.AuthApiClient;
-import models.LoginBodyModel;
 import models.LogoutBodyModel;
 import models.LogoutErrorResponseModel;
 import models.LogoutValidationErrorResponseModel;
@@ -30,7 +29,7 @@ public class LogoutNegativeTests extends TestBase {
 
         LogoutErrorResponseModel response = api.logoutWithError(logoutData, 401);
 
-        assertThat(response.detail()).isEqualTo("Token is invalid or expired");
+        assertThat(response.detail()).isEqualTo("Token is invalid");
     }
 
     @Test

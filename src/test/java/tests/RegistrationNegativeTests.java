@@ -1,6 +1,8 @@
 package tests;
 
+import api.AuthApiClient;
 import models.RegistrationBodyRecordsModel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +13,10 @@ import static specs.RegistrationSpecs.registrationRequestSpec;
 import static tests.TestData.LOGIN_PASSWORD;
 import static tests.TestData.LOGIN_USERNAME;
 
-public class RegistrationNegativeTests {
+public class RegistrationNegativeTests extends TestBase  {
 
-    private static final String REGISTER_ENDPOINT = "/auth/register/";
+
+    private static final String REGISTER_ENDPOINT = "/users/register/";
 
     @Test
     @DisplayName("Регистрация с пустым username должна вернуть 400")
@@ -41,7 +44,7 @@ public class RegistrationNegativeTests {
                 .spec(registrationRequestSpec)
                 .body(requestBody)
                 .when()
-                .post(REGISTER_ENDPOINT)
+                .post("/users/register/")
                 .then()
                 .spec(error400ResponseSpec)
                 .body("$", hasKey("password"));
