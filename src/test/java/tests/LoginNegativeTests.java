@@ -20,7 +20,7 @@ public class LoginNegativeTests extends TestBase {
 
     @Test
     @DisplayName("Логин с неверным паролем должен вернуть 401")
-    void loginWithWrongPassword_shouldReturn401() {
+    void wrongPasswordReturn401() {
         LoginBodyModel loginData = new LoginBodyModel(
                 LoginTestDataGenerator.VALID_USERNAME,
                 LoginTestDataGenerator.WRONG_PASSWORD
@@ -43,7 +43,7 @@ public class LoginNegativeTests extends TestBase {
 
     @Test
     @DisplayName("Логин с несуществующим username должен вернуть 401")
-    void loginWithNonExistentUsername_shouldReturn401() {
+    void nonExistentUsernameReturn401() {
         LoginBodyModel loginData = new LoginBodyModel(
                 LoginTestDataGenerator.NON_EXISTENT_USERNAME,
                 LoginTestDataGenerator.VALID_PASSWORD
@@ -64,7 +64,7 @@ public class LoginNegativeTests extends TestBase {
 
     @Test
     @DisplayName("Логин без Content-Type заголовка")
-    void loginWithoutContentType_shouldReturn415() {
+    void loginWithoutContentTypeReturn415() {
         LoginBodyModel loginData = new LoginBodyModel(
                 LoginTestDataGenerator.VALID_USERNAME,
                 LoginTestDataGenerator.VALID_PASSWORD
