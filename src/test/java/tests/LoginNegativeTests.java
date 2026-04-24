@@ -9,7 +9,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
-import static specs.LoginSpec.loginRequestSpec;
 import static specs.LoginSpec.unauthorizedResponseSpec;
 import static tests.TestData.*;
 
@@ -24,7 +23,7 @@ public class LoginNegativeTests extends TestBase {
         LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, WRONG_PASSWORD);
 
         WrongCredentialsLoginResponseModel response = given()
-                .spec(loginRequestSpec)
+                .spec(requestSpecification)
                 .body(loginData)
                 .when()
                 .post(LOGIN_ENDPOINT)
@@ -44,7 +43,7 @@ public class LoginNegativeTests extends TestBase {
         LoginBodyModel loginData = new LoginBodyModel(NON_EXISTENT_USERNAME, LOGIN_PASSWORD);
 
         WrongCredentialsLoginResponseModel response = given()
-                .spec(loginRequestSpec)
+                .spec(requestSpecification)
                 .body(loginData)
                 .when()
                 .post(LOGIN_ENDPOINT)

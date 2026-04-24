@@ -1,17 +1,13 @@
 package tests;
 
-import api.AuthApiClient;
 import models.RegistrationBodyRecordsModel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 import static specs.RegistrationSpecs.error400ResponseSpec;
-import static specs.RegistrationSpecs.registrationRequestSpec;
-import static tests.TestData.LOGIN_PASSWORD;
-import static tests.TestData.LOGIN_USERNAME;
+import static tests.TestData.*;
 
 public class RegistrationNegativeTests extends TestBase  {
 
@@ -21,11 +17,11 @@ public class RegistrationNegativeTests extends TestBase  {
     @Test
     @DisplayName("Регистрация с пустым username должна вернуть 400")
     void emptyUsernameReturn400() {
-        RegistrationBodyRecordsModel requestBody = new RegistrationBodyRecordsModel("", LOGIN_PASSWORD);
+        RegistrationBodyRecordsModel requestBody = new RegistrationBodyRecordsModel(EMPTY_USERNAME, LOGIN_PASSWORD);
 
 
         given()
-                .spec(registrationRequestSpec)
+                .spec(requestSpecification)
                 .body(requestBody)
                 .when()
                 .post(REGISTER_ENDPOINT)
@@ -41,7 +37,7 @@ public class RegistrationNegativeTests extends TestBase  {
         RegistrationBodyRecordsModel requestBody = new RegistrationBodyRecordsModel(LOGIN_USERNAME,"");
 
         given()
-                .spec(registrationRequestSpec)
+                .spec(requestSpecification)
                 .body(requestBody)
                 .when()
                 .post("/users/register/")

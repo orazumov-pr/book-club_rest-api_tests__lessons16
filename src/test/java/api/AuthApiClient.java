@@ -3,10 +3,9 @@ package api;
 import models.*;
 
 import static io.restassured.RestAssured.given;
-import static specs.BaseSpec.baseRequestSpec;
-import static specs.LoginSpec.loginRequestSpec;
 import static specs.LoginSpec.successfulLoginResponseSpec;
 import static specs.LogoutSpec.*;
+import static tests.TestBase.requestSpecification;
 
 
 public class AuthApiClient {
@@ -15,7 +14,7 @@ public class AuthApiClient {
     private static final String LOGOUT_ENDPOINT = "/auth/logout/";
 
     public SuccessfulLoginResponseModel login(LoginBodyModel loginBody) {
-        return given(loginRequestSpec)
+        return given(requestSpecification)
                 .body(loginBody)
                 .when()
                 .post(LOGIN_ENDPOINT)
@@ -26,7 +25,7 @@ public class AuthApiClient {
     }
 
     public String loginAndGetRefreshToken(LoginBodyModel loginBody) {
-        return given(loginRequestSpec)
+        return given(requestSpecification)
                 .body(loginBody)
                 .when()
                 .post(LOGIN_ENDPOINT)
@@ -37,7 +36,7 @@ public class AuthApiClient {
     }
 
     public void logout(LogoutBodyModel logoutBody) {
-        given(baseRequestSpec)
+        given(requestSpecification)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)
@@ -46,7 +45,7 @@ public class AuthApiClient {
     }
 
     public LogoutErrorResponseModel logoutWithError(LogoutBodyModel logoutBody, int expectedStatusCode) {
-        return given(baseRequestSpec)
+        return given(requestSpecification)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)
@@ -57,7 +56,7 @@ public class AuthApiClient {
     }
 
     public LogoutValidationErrorResponseModel logoutWithValidationError(LogoutBodyModel logoutBody) {
-        return given(baseRequestSpec)
+        return given(requestSpecification)
                 .body(logoutBody)
                 .when()
                 .post(LOGOUT_ENDPOINT)

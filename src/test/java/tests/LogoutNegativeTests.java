@@ -24,7 +24,7 @@ public class LogoutNegativeTests extends TestBase {
 
     @Test
     @DisplayName("Логаут с невалидным refresh токеном должен вернуть 401")
-    void logoutWithInvalidRefreshToken_shouldReturn401() {
+    void logoutWithInvalidRefreshTokenReturn401() {
         LogoutBodyModel logoutData = new LogoutBodyModel(INVALID_REFRESH_TOKEN);
 
         LogoutErrorResponseModel response = api.logoutWithError(logoutData, 401);
@@ -34,7 +34,7 @@ public class LogoutNegativeTests extends TestBase {
 
     @Test
     @DisplayName("Логаут с пустым refresh токеном должен вернуть 400")
-    void logoutWithEmptyRefreshToken_shouldReturn400() {
+    void logoutWithEmptyRefreshTokenReturn400() {
         LogoutBodyModel logoutData = new LogoutBodyModel("");
 
         LogoutValidationErrorResponseModel response = api.logoutWithValidationError(logoutData);
