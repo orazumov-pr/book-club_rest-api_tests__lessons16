@@ -24,7 +24,7 @@ public class UserSimpleTests {
     private Integer userId;
 
     @BeforeEach
-    void setUp() {
+    void userSetUp() {
         faker = new Faker();
 
         firstName = faker.name().firstName();
