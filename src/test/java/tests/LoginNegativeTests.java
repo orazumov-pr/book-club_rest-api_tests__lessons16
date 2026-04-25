@@ -10,6 +10,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static specs.LoginSpec.unauthorizedResponseSpec;
+import static specs.RegistrationSpecs.requestSpecification;
 import static tests.TestData.*;
 
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 import static specs.RegistrationSpecs.error400ResponseSpec;
+import static specs.RegistrationSpecs.requestSpecification;
 import static tests.TestData.*;
 
 public class RegistrationNegativeTests extends TestBase  {

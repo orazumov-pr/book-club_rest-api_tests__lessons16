@@ -7,6 +7,7 @@ import models.RegistrationResponseRecordsModel;
 import models.TokenResponseModel;
 import tests.TestBase;
 import static io.restassured.RestAssured.given;
+import static specs.RegistrationSpecs.requestSpecification;
 
 
 public class UserApi {
@@ -15,7 +16,7 @@ public class UserApi {
         RegistrationBodyRecordsModel body = new RegistrationBodyRecordsModel(username, password);
 
         return given()
-                .spec(TestBase.requestSpecification)
+                .spec(requestSpecification)
                 .body(body)
                 .when()
                 .post("/users/register/")
@@ -30,7 +31,7 @@ public class UserApi {
         LoginBodyModel body = new LoginBodyModel(username, password);
 
         return given()
-                .spec(TestBase.requestSpecification)
+                .spec(requestSpecification)
                 .body(body)
                 .when()
                 .post("/auth/token/")
@@ -45,7 +46,7 @@ public class UserApi {
         LoginBodyModel body = new LoginBodyModel(username, password);
 
         return given()
-                .spec(TestBase.requestSpecification)
+                .spec(requestSpecification)
                 .body(body)
                 .when()
                 .post("/auth/token/")
@@ -59,7 +60,7 @@ public class UserApi {
         RegistrationBodyRecordsModel body = new RegistrationBodyRecordsModel(username, password);
 
         return given()
-                .spec(TestBase.requestSpecification)
+                .spec(requestSpecification)
                 .body(body)
                 .when()
                 .post("/users/register/")

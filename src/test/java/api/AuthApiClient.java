@@ -5,7 +5,7 @@ import models.*;
 import static io.restassured.RestAssured.given;
 import static specs.LoginSpec.successfulLoginResponseSpec;
 import static specs.LogoutSpec.*;
-import static tests.TestBase.requestSpecification;
+import static specs.RegistrationSpecs.requestSpecification;
 
 
 public class AuthApiClient {
