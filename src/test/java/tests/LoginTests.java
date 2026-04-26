@@ -21,5 +21,4 @@ public class LoginTests extends TestBase {
         assertThat(actualRefresh).startsWith(LOGIN_TOKEN_PREFIX);
         assertThat(actualAccess).isNotEqualTo(actualRefresh);
     }
-
 }

@@ -46,5 +46,4 @@ public class RegistrationNegativeTests extends TestBase  {
                 .spec(error400ResponseSpec)
                 .body("$", hasKey("password"));
     }
-
 }
