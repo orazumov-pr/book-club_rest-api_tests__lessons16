@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '4.0.0'
 }
 
 group = 'guru.qa'
@@ -9,27 +10,71 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation(
-            'org.junit.jupiter:junit-jupiter',
-            'io.rest-assured:rest-assured:6.0.0',
-            'tools.jackson.core:jackson-databind:3.1.0',
-            'org.assertj:assertj-core:3.27.7',
-            'io.rest-assured:json-schema-validator:6.0.0'
-    )
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'com.github.javafaker:javafaker:1.0.2'
-}
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-    systemProperties(System.getProperties())
+// Версии зависимостей
+def allureVersion = "2.34.0"
+def restAssuredVersion = "6.0.0"
+def junitVersion = "6.0.3"
+def jacksonVersion = "2.18.2"
+def assertjVersion = "3.27.3"
+def slf4jVersion = "2.0.16"
+def javafakerVersion = "1.0.2"
 
-    testLogging {
-        lifecycle {
-            events "started", "skipped", "failed", "standard_error", "standard_out"
-            exceptionFormat "short"
+// Настройка Allure плагина
+allure {
+    version.set(allureVersion)
+
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit6 {
+                adapterVersion.set(allureVersion)
+            }
         }
     }
+}
+
+dependencies {
+    // JUnit 6
+    testImplementation platform("org.junit:junit-bom:$junitVersion")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+
+    // Rest Assured
+    testImplementation "io.rest-assured:rest-assured:$restAssuredVersion"
+    testImplementation "io.rest-assured:json-schema-validator:$restAssuredVersion"
+
+    // Allure для Rest Assured
+    testImplementation "io.qameta.allure:allure-rest-assured:$allureVersion"
+
+    // Jackson для работы с JSON
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    // AssertJ для красивых ассертов
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+
+    // Логгирование
+    testImplementation "org.slf4j:slf4j-simple:$slf4jVersion"
+
+    // JavaFaker для тестовых данных
+    testImplementation "com.github.javafaker:javafaker:$javafakerVersion"
+}
+
+// Настройка тестов
+tasks.named('test', Test) {
+    useJUnitPlatform()
+
+    // Передаем системные свойства в тесты
+    systemProperties = System.getProperties()
+
+    // Настройка логирования тестов
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+
+        info {
+            events "started", "passed", "skipped", "failed"
+            exceptionFormat "full"
+        }
+    }
+
 }
