@@ -59,9 +59,15 @@ dependencies {
     testImplementation "com.github.javafaker:javafaker:$javafakerVersion"
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 // Настройка тестов
 tasks.named('test', Test) {
     useJUnitPlatform()
+
+    systemProperty "file.encoding", "utf-8"
 
     // Передаем системные свойства в тесты
     systemProperties = System.getProperties()

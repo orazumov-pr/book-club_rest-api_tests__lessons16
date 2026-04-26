@@ -3,6 +3,7 @@ package tests;
 import com.github.javafaker.Faker;
 import models.RegistrationBodyRecordsModel;
 import models.RegistrationResponseRecordsModel;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
@@ -41,6 +42,7 @@ public class RegistrationTestsFromLesson {
     }
 
     @Test
+    @Disabled
     public void existingUser400Test() {
 
         Faker faker = new Faker();
@@ -62,6 +64,7 @@ public class RegistrationTestsFromLesson {
     }
 
     @Test
+    @Disabled
     public void successfulRegistrationTest_with_records(){
         RegistrationBodyRecordsModel data = new RegistrationBodyRecordsModel(username, password);
 

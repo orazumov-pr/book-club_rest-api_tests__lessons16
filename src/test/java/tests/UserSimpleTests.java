@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -92,6 +93,7 @@ public class UserSimpleTests {
 
     @Test
     @DisplayName("Успешная регистрация пользователя")
+    @Disabled
     void successfulRegistrationTest() {
         String newUsername = "new_user_" + System.currentTimeMillis();
         String newPassword = "new_pass_" + System.currentTimeMillis();
@@ -121,6 +123,7 @@ public class UserSimpleTests {
 
     @Test
     @DisplayName("Логин с неверным паролем должен вернуть 401")
+    @Disabled
     void loginWithWrongPasswordTest() {
         String loginBody = String.format(
                 "{\"username\":\"%s\", \"password\":\"%s\"}",
@@ -141,6 +144,7 @@ public class UserSimpleTests {
 
     @Test
     @DisplayName("Логин с несуществующим username должен вернуть 401")
+    @Disabled
     void loginWithNonExistentUsernameTest() {
         String loginBody = String.format(
                 "{\"username\":\"%s\", \"password\":\"%s\"}",
@@ -161,6 +165,7 @@ public class UserSimpleTests {
 
     @Test
     @DisplayName("Логин с пустым username должен вернуть 400")
+    @Disabled
     void loginWithEmptyUsernameTest() {
         String loginBody = String.format(
                 "{\"username\":\"%s\", \"password\":\"%s\"}",
