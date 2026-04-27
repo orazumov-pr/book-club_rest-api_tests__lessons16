@@ -15,8 +15,7 @@ public class RegistrationSpecs {
     public static RequestSpecification requestSpecification = with()
             .filter(withCustomTemplate())
             .log().all()
-            .contentType(ContentType.JSON)
-            .basePath("/api/v1");
+            .contentType(ContentType.JSON);
 
     public static ResponseSpecification error400ResponseSpec = new ResponseSpecBuilder()
             .log(ALL)

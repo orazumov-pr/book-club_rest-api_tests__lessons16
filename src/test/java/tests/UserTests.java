@@ -1,5 +1,6 @@
 package tests;
 
+import api.ApiClient;
 import io.restassured.response.Response;
 import models.RegistrationResponseRecordsModel;
 import models.TokenResponseModel;
@@ -18,20 +19,24 @@ public class UserTests extends TestBase {
     private String accessToken;
     private Integer userId;
 
+    private ApiClient apiClient;
+
     @BeforeEach
     void userSetUp() {
+        apiClient = new ApiClient();
+
         // Используем уникальные данные для каждого теста
         username = TestData.generateUniqueUsername();
         password = TestData.generateUniquePassword();
 
         // Регистрация пользователя для всех тестов
-        RegistrationResponseRecordsModel registrationResponse = UserApi.registerUser(username, password);
+        RegistrationResponseRecordsModel registrationResponse = apiClient.users.registerUser(username, password);
         userId = registrationResponse.id();
         assertThat(userId).isNotNull();
         assertThat(registrationResponse.username()).isEqualTo(username);
 
         // Логин и получение токена
-        TokenResponseModel tokenResponse = UserApi.login(username, password);
+        TokenResponseModel tokenResponse = apiClient.users.login(username, password);
         accessToken = tokenResponse.access();
         assertThat(accessToken).isNotNull();
         assertThat(tokenResponse.refresh()).isNotNull();
@@ -43,7 +48,7 @@ public class UserTests extends TestBase {
         String newUsername = TestData.generateUniqueUsername();
         String newPassword = TestData.generateUniquePassword();
 
-        RegistrationResponseRecordsModel response = UserApi.registerUser(newUsername, newPassword);
+        RegistrationResponseRecordsModel response = apiClient.users.registerUser(newUsername, newPassword);
 
         assertThat(response.username()).isEqualTo(newUsername);
         assertThat(response.id()).isNotNull();
@@ -52,7 +57,7 @@ public class UserTests extends TestBase {
     @Test
     @DisplayName("Логин с неверным паролем должен вернуть 401")
     void loginWithWrongPasswordTest() {
-        Response response = UserApi.loginWithInvalidCredentials(username, TestData.WRONG_PASSWORD);
+        Response response = apiClient.users.loginWithInvalidCredentials(username, TestData.WRONG_PASSWORD);
 
         response.then()
                 .statusCode(401)
@@ -62,7 +67,7 @@ public class UserTests extends TestBase {
     @Test
     @DisplayName("Логин с несуществующим username должен вернуть 401")
     void loginWithNonExistentUsernameTest() {
-        Response response = UserApi.loginWithInvalidCredentials(
+        Response response = apiClient.users.loginWithInvalidCredentials(
                 TestData.NON_EXISTENT_USERNAME,
                 password
         );
@@ -75,7 +80,7 @@ public class UserTests extends TestBase {
     @Test
     @DisplayName("Логин с пустым username должен вернуть 400")
     void loginWithEmptyUsernameTest() {
-        Response response = UserApi.loginWithInvalidCredentials(
+        Response response = apiClient.users.loginWithInvalidCredentials(
                 TestData.EMPTY_USERNAME,
                 password
         );
@@ -88,7 +93,7 @@ public class UserTests extends TestBase {
     @DisplayName("Регистрация с уже существующим username должна вернуть ошибку")
     void registrationWithExistingUsernameTest() {
         // Пытаемся зарегистрировать пользователя с уже существующим username
-        Response response = UserApi.registerUserRaw(username, TestData.generateUniquePassword());
+        Response response = apiClient.users.registerUserRaw(username, TestData.generateUniquePassword());
 
         response.then()
                 .statusCode(400);
