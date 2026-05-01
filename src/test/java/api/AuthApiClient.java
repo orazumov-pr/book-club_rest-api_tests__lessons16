@@ -3,6 +3,7 @@ package api;
 import models.*;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static specs.LoginSpec.successfulLoginResponseSpec;
 import static specs.LogoutSpec.*;
 import static specs.RegistrationSpecs.requestSpecification;
@@ -22,6 +23,21 @@ public class AuthApiClient {
                 .spec(successfulLoginResponseSpec)
                 .extract()
                 .as(SuccessfulLoginResponseModel.class);
+    }
+
+    public String loginAndGetAccessToken(LoginBodyModel loginData) {
+        return given()
+                .log().all()
+                .contentType(JSON)
+                .basePath("/api/v1")
+                .body(loginData)
+                .when()
+                .post(LOGIN_ENDPOINT)
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .path("access");
     }
 
     public String loginAndGetRefreshToken(LoginBodyModel loginBody) {
@@ -66,14 +82,5 @@ public class AuthApiClient {
                 .as(LogoutValidationErrorResponseModel.class);
     }
 
-    public String loginAndGetAccessToken(LoginBodyModel loginBody) {
-        return given(loginRequestSpec)
-                .body(loginBody)
-                .when()
-                .post(LOGIN_ENDPOINT)
-                .then()
-                .spec(successfulLoginResponseSpec)
-                .extract()
-                .path("access");
-    }
+
 }

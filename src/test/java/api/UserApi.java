@@ -5,11 +5,14 @@ import models.*;
 import specs.ClubsSpec;
 import tests.TestBase;
 import static io.restassured.RestAssured.given;
-import static specs.ClubsSpec.successfulClubCreateResponseSpec;
+import static specs.ClubsSpec.*;
 import static specs.RegistrationSpecs.requestSpecification;
 
 
+
 public class UserApi {
+
+    private static final String REGISTER_ENDPOINT = "/users/register/";
 
     public static RegistrationResponseRecordsModel registerUser(String username, String password) {
         RegistrationBodyRecordsModel body = new RegistrationBodyRecordsModel(username, password);
@@ -18,7 +21,7 @@ public class UserApi {
                 .spec(requestSpecification)
                 .body(body)
                 .when()
-                .post("/users/register/")
+                .post(REGISTER_ENDPOINT)
                 .then()
                 .log().ifValidationFails()
                 .statusCode(201)
@@ -62,7 +65,7 @@ public class UserApi {
                 .spec(requestSpecification)
                 .body(body)
                 .when()
-                .post("/users/register/")
+                .post(REGISTER_ENDPOINT)
                 .then()
                 .log().ifValidationFails()
                 .extract()
@@ -79,6 +82,17 @@ public class UserApi {
                 .spec(successfulClubCreateResponseSpec)
                 .extract()
                 .as(CreateClubResponseModel.class);
+    }
+
+    public RegistrationResponseRecordsModel register(RegistrationBodyRecordsModel registrationData) {
+        return given(clubsRequestSpec)
+                .body(registrationData)
+                .when()
+                .post(REGISTER_ENDPOINT)
+                .then()
+                .spec(successfulRegistrationResponseSpec)
+                .extract()
+                .as(RegistrationResponseRecordsModel.class);
     }
 
 }

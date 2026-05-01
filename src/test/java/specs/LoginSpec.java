@@ -12,6 +12,11 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginSpec {
 
+    // Request Specification для логина
+    public static RequestSpecification loginRequestSpec = with()
+            .log().all()
+            .contentType(ContentType.JSON)
+            .basePath("/api/v1");
 
     public static ResponseSpecification successfulLoginResponseSpec = new ResponseSpecBuilder()
             .log(ALL)
@@ -26,7 +31,5 @@ public class LoginSpec {
             .log(ALL)
             .expectStatusCode(401)
             .build();
-
-
 
 }

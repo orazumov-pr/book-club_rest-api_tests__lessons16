@@ -52,15 +52,23 @@ public class ClubsApiClient {
     }
 
     public ClubsErrorResponseModel createClubWithError(String accessToken, CreateClubRequestModel request, int expectedStatusCode) {
-        return given(clubsRequestSpec)
+        var response = given(clubsRequestSpec)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request)
                 .when()
                 .post(CLUBS_ENDPOINT)
                 .then()
                 .statusCode(expectedStatusCode)
-                .extract()
-                .as(ClubsErrorResponseModel.class);
+                .extract();
+
+        // Попытка десериализовать в модель ошибки
+        try {
+            return response.as(ClubsErrorResponseModel.class);
+        } catch (Exception e) {
+            // Если не получилось, создаем модель с detail из ответа
+            String detail = response.path("detail");
+            return new ClubsErrorResponseModel(detail, null, null, null, null);
+        }
     }
 
 
