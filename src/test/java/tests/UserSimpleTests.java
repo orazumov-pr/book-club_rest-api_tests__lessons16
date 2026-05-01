@@ -15,7 +15,6 @@ public class UserSimpleTests {
     private static final String BASE_URI = "https://book-club.qa.guru";
     private static final String BASE_PATH = "/api/v1";
 
-    private Faker faker;
     private String username;
     private String password;
     private String firstName;
@@ -26,7 +25,7 @@ public class UserSimpleTests {
 
     @BeforeEach
     void userSetUp() {
-        faker = new Faker();
+        Faker faker = new Faker();
 
         firstName = faker.name().firstName();
         lastName = faker.name().lastName();

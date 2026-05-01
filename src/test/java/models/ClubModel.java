@@ -11,7 +11,7 @@ public record ClubModel(
         String telegramChatLink,
         Integer owner,
         List<Integer> members,
-        List<ClubsReviewModel> reviews,
+        List<ReviewModel> reviews,
         String created,
         String modified
 ) {}

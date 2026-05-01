@@ -1,9 +1,9 @@
 package models;
 
-public class ClubsReviewModel (
+public record ReviewModel(
         Integer id,
         Integer club,
-        ClubsUserShortModel user,
+        UserShortModel user,
         String review,
         Integer assessment,
         Integer readPages,

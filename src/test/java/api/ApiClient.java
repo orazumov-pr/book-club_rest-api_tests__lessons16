@@ -7,5 +7,6 @@ public class ApiClient {
 
     public final AuthApiClient auth = new AuthApiClient();
     public final UserApi users = new UserApi();
+    public final ClubsApiClient club = new ClubsApiClient();
 
 }

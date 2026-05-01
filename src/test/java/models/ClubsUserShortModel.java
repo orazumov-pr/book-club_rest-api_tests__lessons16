@@ -1,6 +1,6 @@
 package models;
 
-public class ClubsUserShortModel (
+record UserShortModel(
         Integer id,
         String username
 ) {}
