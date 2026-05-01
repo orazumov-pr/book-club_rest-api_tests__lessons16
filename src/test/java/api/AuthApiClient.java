@@ -66,4 +66,14 @@ public class AuthApiClient {
                 .as(LogoutValidationErrorResponseModel.class);
     }
 
+    public String loginAndGetAccessToken(LoginBodyModel loginBody) {
+        return given(loginRequestSpec)
+                .body(loginBody)
+                .when()
+                .post(LOGIN_ENDPOINT)
+                .then()
+                .spec(successfulLoginResponseSpec)
+                .extract()
+                .path("access");
+    }
 }

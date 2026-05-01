@@ -3,7 +3,8 @@ package models;
 public record ReviewModel(
         Integer id,
         Integer club,
-        UserShortModel user,
+        Integer userId,
+        String username,
         String review,
         Integer assessment,
         Integer readPages,

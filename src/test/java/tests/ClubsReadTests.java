@@ -18,7 +18,6 @@ public class ClubsReadTests extends TestBase {
 
     // ================ ПОЗИТИВНЫЕ ТЕСТЫ =================
 
-
     @Test
     @DisplayName("Получение списка клубов должно вернуть 200 и непустой список")
     void getClubsListReturn200() {

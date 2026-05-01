@@ -25,36 +25,17 @@ public class ClubsSpec {
             .expectBody("results", notNullValue())
             .build();
 
-    // Успешный ответ с конкретным клубом
-    public static ResponseSpecification successfulClubResponseSpec = new ResponseSpecBuilder()
+    // Успешное создание клуба
+    public static ResponseSpecification successfulClubCreateResponseSpec = new ResponseSpecBuilder()
             .log(ALL)
-            .expectStatusCode(200)
+            .expectStatusCode(201)
             .expectBody("id", notNullValue())
             .expectBody("bookTitle", notNullValue())
+            .expectBody("bookAuthors", notNullValue())
+            .expectBody("publicationYear", notNullValue())
             .expectBody("owner", notNullValue())
+            .expectBody("created", notNullValue())
             .build();
 
-    // Клуб не найден
-    public static ResponseSpecification clubNotFoundResponseSpec = new ResponseSpecBuilder()
-            .log(ALL)
-            .expectStatusCode(404)
-            .build();
 
-    // Неавторизованный доступ
-    public static ResponseSpecification unauthorizedResponseSpec = new ResponseSpecBuilder()
-            .log(ALL)
-            .expectStatusCode(401)
-            .build();
-
-    // Неправильный метод
-    public static ResponseSpecification methodNotAllowedResponseSpec = new ResponseSpecBuilder()
-            .log(ALL)
-            .expectStatusCode(405)
-            .build();
-
-    // Плохой запрос
-    public static ResponseSpecification badRequestResponseSpec = new ResponseSpecBuilder()
-            .log(ALL)
-            .expectStatusCode(400)
-            .build();
 }

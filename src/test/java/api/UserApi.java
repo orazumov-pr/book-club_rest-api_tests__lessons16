@@ -1,12 +1,11 @@
 package api;
 
 import io.restassured.response.Response;
-import models.LoginBodyModel;
-import models.RegistrationBodyRecordsModel;
-import models.RegistrationResponseRecordsModel;
-import models.TokenResponseModel;
+import models.*;
+import specs.ClubsSpec;
 import tests.TestBase;
 import static io.restassured.RestAssured.given;
+import static specs.ClubsSpec.successfulClubCreateResponseSpec;
 import static specs.RegistrationSpecs.requestSpecification;
 
 
@@ -69,5 +68,18 @@ public class UserApi {
                 .extract()
                 .response();
     }
+
+    public CreateClubResponseModel createClub(String accessToken, CreateClubRequestModel createClubBody) {
+        return given(requestSpecification)
+                .header("Authorization", "Bearer " + accessToken)
+                .body(createClubBody)
+                .when()
+                .post("/clubs/")
+                .then()
+                .spec(successfulClubCreateResponseSpec)
+                .extract()
+                .as(CreateClubResponseModel.class);
+    }
+
 }
 
