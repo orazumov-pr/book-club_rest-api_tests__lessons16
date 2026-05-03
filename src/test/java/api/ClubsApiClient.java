@@ -1,9 +1,6 @@
 package api;
 
-import models.ClubsErrorResponseModel;
-import models.ClubsListResponseModel;
-import models.CreateClubRequestModel;
-import models.CreateClubResponseModel;
+import models.*;
 
 import static io.restassured.RestAssured.given;
 import static specs.ClubsSpec.*;
@@ -24,6 +21,16 @@ public class ClubsApiClient {
                 .spec(successfulClubsListResponseSpec)
                 .extract()
                 .as(ClubsListResponseModel.class);
+    }
+    public ClubModel getClubById(int clubId) {
+        return given(clubsRequestSpec)
+                .pathParam("id", clubId)
+                .when()
+                .get(CLUB_BY_ID_ENDPOINT)
+                .then()
+                .spec(successfulClubResponseSpec)
+                .extract()
+                .as(ClubModel.class);
     }
 
     public ClubsErrorResponseModel getClubByIdWithError(int clubId, int expectedStatusCode) {
@@ -61,7 +68,6 @@ public class ClubsApiClient {
                 .statusCode(expectedStatusCode)
                 .extract();
 
-        // Попытка десериализовать в модель ошибки
         try {
             return response.as(ClubsErrorResponseModel.class);
         } catch (Exception e) {
@@ -71,6 +77,42 @@ public class ClubsApiClient {
         }
     }
 
+    // ========== DELETE МЕТОДЫ ==========
 
+    public void deleteClub(String accessToken, int clubId) {
+        given(clubsRequestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id", clubId)
+                .when()
+                .delete(CLUB_BY_ID_ENDPOINT)
+                .then()
+                .spec(successfulClubDeleteResponseSpec);
+    }
 
+    public ClubsErrorResponseModel deleteClubWithError(String accessToken, int clubId, int expectedStatusCode) {
+        var response = given(clubsRequestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id", clubId)
+                .when()
+                .delete(CLUB_BY_ID_ENDPOINT)
+                .then()
+                .statusCode(expectedStatusCode)
+                .extract();
+
+        try {
+            return response.as(ClubsErrorResponseModel.class);
+        } catch (Exception e) {
+            String detail = response.path("detail");
+            return new ClubsErrorResponseModel(detail, null, null, null, null);
+        }
+    }
+
+    public void deleteClubWithoutToken(int clubId) {
+        given(clubsRequestSpec)
+                .pathParam("id", clubId)
+                .when()
+                .delete(CLUB_BY_ID_ENDPOINT)
+                .then()
+                .spec(unauthorizedResponseSpec);
+    }
 }

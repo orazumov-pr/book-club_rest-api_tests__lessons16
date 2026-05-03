@@ -1,5 +1,6 @@
 package api;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.*;
 import specs.ClubsSpec;
@@ -7,7 +8,7 @@ import tests.TestBase;
 import static io.restassured.RestAssured.given;
 import static specs.ClubsSpec.*;
 import static specs.RegistrationSpecs.requestSpecification;
-
+import static specs.UserSpec.successfulRegistrationResponseSpec;
 
 
 public class UserApi {
@@ -85,12 +86,17 @@ public class UserApi {
     }
 
     public RegistrationResponseRecordsModel register(RegistrationBodyRecordsModel registrationData) {
-        return given(clubsRequestSpec)
+        return given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .baseUri("https://book-club.qa.guru")  // Добавьте явно
+                .basePath("/api/v1")
                 .body(registrationData)
                 .when()
-                .post(REGISTER_ENDPOINT)
+                .post("/users/register/")
                 .then()
-                .spec(successfulRegistrationResponseSpec)
+                .log().all()
+                .statusCode(201)
                 .extract()
                 .as(RegistrationResponseRecordsModel.class);
     }
