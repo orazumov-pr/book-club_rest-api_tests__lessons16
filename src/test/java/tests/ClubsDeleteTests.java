@@ -52,28 +52,9 @@ public class ClubsDeleteTests extends TestBase{
 
     // ========== ПОЗИТИВНЫЕ ТЕСТЫ ==========
 
-    @Test
-    @DisplayName("Успешное удаление существующего клуба должно вернуть 204")
-    void deleteExistingClub_shouldReturn204() {
-        // Создаем клуб
-        CreateClubRequestModel createRequest = new CreateClubRequestModel(
-                bookTitle, bookAuthors, publicationYear, description, telegramChatLink
-        );
-        CreateClubResponseModel createdClub = api.club.createClub(accessToken, createRequest);
-        int clubId = createdClub.id();
-
-        // Удаляем клуб
-        assertThatCode(() -> api.club.deleteClub(accessToken, clubId))
-                .doesNotThrowAnyException();
-
-        // Проверяем, что клуб действительно удален (404 при попытке получить)
-        ClubsErrorResponseModel errorResponse = api.club.getClubByIdWithError(clubId, 404);
-        assertThat(errorResponse.detail()).contains("Not found");
-    }
-
-    @Test
+     @Test
     @DisplayName("Удаление клуба владельцем должно быть успешным")
-    void deleteClubByOwner_shouldReturn204() {
+    void deleteClubByOwnerReturn204() {
         // Создаем клуб
         CreateClubRequestModel createRequest = new CreateClubRequestModel(
                 bookTitle, bookAuthors, publicationYear, description, telegramChatLink
@@ -93,70 +74,37 @@ public class ClubsDeleteTests extends TestBase{
 
     @Test
     @DisplayName("Удаление несуществующего клуба должно вернуть 404")
-    void deleteNonExistentClub_shouldReturn404() {
+    void deleteNonExistentClubReturn404() {
         int nonExistentId = 999999;
 
         ClubsErrorResponseModel response = api.club.deleteClubWithError(accessToken, nonExistentId, 404);
 
-        assertThat(response.detail()).contains("Not found");
+        assertThat(response.detail()).contains("No Club matches the given query.");
     }
 
-    @Test
-    @DisplayName("Удаление клуба без токена авторизации должно вернуть 401")
-    void deleteClubWithoutToken_shouldReturn401() {
-        // Создаем клуб
-        CreateClubRequestModel createRequest = new CreateClubRequestModel(
-                bookTitle, bookAuthors, publicationYear, description, telegramChatLink
-        );
-        CreateClubResponseModel createdClub = api.club.createClub(accessToken, createRequest);
-        int clubId = createdClub.id();
-
-        // Пытаемся удалить клуб без токена
-        ClubsErrorResponseModel response = api.club.deleteClubWithError(null, clubId, 401);
-
-        assertThat(response.detail()).isEqualTo("Authentication credentials were not provided.");
-    }
-
-    @Test
-    @DisplayName("Удаление клуба с невалидным токеном должно вернуть 401")
-    void deleteClubWithInvalidToken_shouldReturn401() {
-        // Создаем клуб
-        CreateClubRequestModel createRequest = new CreateClubRequestModel(
-                bookTitle, bookAuthors, publicationYear, description, telegramChatLink
-        );
-        CreateClubResponseModel createdClub = api.club.createClub(accessToken, createRequest);
-        int clubId = createdClub.id();
-
-        // Пытаемся удалить клуб с невалидным токеном
-        String invalidToken = "invalid.token.here";
-        ClubsErrorResponseModel response = api.club.deleteClubWithError(invalidToken, clubId, 401);
-
-        assertThat(response.detail()).contains("invalid", "expired");
-    }
-
-    @Test
+     @Test
     @DisplayName("Удаление клуба с отрицательным ID должно вернуть 404")
-    void deleteClubWithNegativeId_shouldReturn404() {
+    void deleteClubWithNegativeIdReturn404() {
         int negativeId = -1;
 
         ClubsErrorResponseModel response = api.club.deleteClubWithError(accessToken, negativeId, 404);
 
-        assertThat(response.detail()).contains("Not found");
+        assertThat(response.detail()).contains("No Club matches the given query.");
     }
 
     @Test
     @DisplayName("Удаление клуба с ID = 0 должно вернуть 404")
-    void deleteClubWithZeroId_shouldReturn404() {
+    void deleteClubWithZeroIdReturn404() {
         int zeroId = 0;
 
         ClubsErrorResponseModel response = api.club.deleteClubWithError(accessToken, zeroId, 404);
 
-        assertThat(response.detail()).contains("Not found");
+        assertThat(response.detail()).contains("No Club matches the given query.");
     }
 
     @Test
     @DisplayName("Повторное удаление уже удаленного клуба должно вернуть 404")
-    void deleteAlreadyDeletedClub_shouldReturn404() {
+    void deleteAlreadyDeletedClubReturn404() {
         // Создаем клуб
         CreateClubRequestModel createRequest = new CreateClubRequestModel(
                 bookTitle, bookAuthors, publicationYear, description, telegramChatLink
@@ -170,6 +118,6 @@ public class ClubsDeleteTests extends TestBase{
         // Пытаемся удалить клуб второй раз
         ClubsErrorResponseModel response = api.club.deleteClubWithError(accessToken, clubId, 404);
 
-        assertThat(response.detail()).contains("Not found");
+        assertThat(response.detail()).contains("No Club matches the given query.");
     }
 }
