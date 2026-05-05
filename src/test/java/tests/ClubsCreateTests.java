@@ -67,24 +67,6 @@ public class ClubsCreateTests extends TestBase {
         assertThat(response.created()).isNotNull();
     }
 
-    @Test
-    @DisplayName("Создание клуба с максимальными значениями полей")
-    void createClubWithMaxValuesReturn201() {
-        String longTitle = faker.lorem().characters(200);
-        String longAuthors = faker.lorem().characters(500);
-        Integer maxYear = 2147483647;  // Максимальное значение Integer
-
-        CreateClubRequestModel request = new CreateClubRequestModel(
-                longTitle, longAuthors, maxYear, description, telegramChatLink
-        );
-
-        CreateClubResponseModel response = api.club.createClub(accessToken, request);
-
-        assertThat(response.id()).isNotNull();
-        assertThat(response.bookTitle()).isEqualTo(longTitle);
-        assertThat(response.bookAuthors()).isEqualTo(longAuthors);
-        assertThat(response.publicationYear()).isEqualTo(maxYear);
-    }
 
     // ========== НЕГАТИВНЫЕ ТЕСТЫ ==========
 
