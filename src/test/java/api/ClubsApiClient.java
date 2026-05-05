@@ -22,16 +22,6 @@ public class ClubsApiClient {
                 .extract()
                 .as(ClubsListResponseModel.class);
     }
-    public ClubModel getClubById(int clubId) {
-        return given(clubsRequestSpec)
-                .pathParam("id", clubId)
-                .when()
-                .get(CLUB_BY_ID_ENDPOINT)
-                .then()
-                .spec(successfulClubResponseSpec)
-                .extract()
-                .as(ClubModel.class);
-    }
 
     public ClubsErrorResponseModel getClubByIdWithError(int clubId, int expectedStatusCode) {
         return given(clubsRequestSpec)
@@ -68,12 +58,18 @@ public class ClubsApiClient {
                 .statusCode(expectedStatusCode)
                 .extract();
 
+        // Пробуем десериализовать в модель ошибки
         try {
             return response.as(ClubsErrorResponseModel.class);
         } catch (Exception e) {
-            // Если не получилось, создаем модель с detail из ответа
+            // Если не получилось, создаем модель с извлеченными полями
             String detail = response.path("detail");
-            return new ClubsErrorResponseModel(detail, null, null, null, null);
+            String[] bookTitle = response.path("bookTitle");
+            String[] bookAuthors = response.path("bookAuthors");
+            String[] description = response.path("description");
+            String[] telegramChatLink = response.path("telegramChatLink");
+
+            return new ClubsErrorResponseModel(detail, bookTitle, bookAuthors, description, telegramChatLink);
         }
     }
 
@@ -107,12 +103,4 @@ public class ClubsApiClient {
         }
     }
 
-    public void deleteClubWithoutToken(int clubId) {
-        given(clubsRequestSpec)
-                .pathParam("id", clubId)
-                .when()
-                .delete(CLUB_BY_ID_ENDPOINT)
-                .then()
-                .spec(unauthorizedResponseSpec);
-    }
 }
