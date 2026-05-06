@@ -12,11 +12,6 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class UserSpec {
 
-    public static RequestSpecification userRequestSpec = with()
-            .log().all()
-            .contentType(ContentType.JSON)
-            .basePath("/api/v1");
-
     // Регистрация
     public static ResponseSpecification successfulRegistrationResponseSpec = new ResponseSpecBuilder()
             .log(ALL)

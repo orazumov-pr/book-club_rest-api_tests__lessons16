@@ -89,8 +89,6 @@ public class UserApi {
         return given()
                 .log().all()
                 .contentType(ContentType.JSON)
-                .baseUri("https://book-club.qa.guru")  // Добавьте явно
-                .basePath("/api/v1")
                 .body(registrationData)
                 .when()
                 .post("/users/register/")

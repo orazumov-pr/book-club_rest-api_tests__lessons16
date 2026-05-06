@@ -38,7 +38,7 @@ public class ClubsCreateTests extends TestBase {
         accessToken = api.auth.loginAndGetAccessToken(loginData);
 
         // Подготовка тестовых данных для клуба
-        bookTitle = faker.book().title();
+        bookTitle = faker.book().title() + " " + faker.number().numberBetween(1000, 9999);
         bookAuthors = faker.book().author();
         publicationYear = 2147483647;
         description = faker.lorem().paragraph();

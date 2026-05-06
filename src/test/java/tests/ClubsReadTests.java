@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasKey;
-import static specs.ClubsSpec.clubsRequestSpec;
+import static specs.RegistrationSpecs.requestSpecification;
+
 
 public class ClubsReadTests extends TestBase {
 
@@ -58,7 +59,7 @@ public class ClubsReadTests extends TestBase {
     @Test
     @DisplayName("Ответ со списком клубов должен содержать обязательные поля")
     void clubsListRequiredFields() {
-        String response = given(clubsRequestSpec)
+        String response = given(requestSpecification)
                 .when()
                 .get("/clubs/")
                 .then()

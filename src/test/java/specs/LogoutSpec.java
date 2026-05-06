@@ -1,7 +1,6 @@
 package specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.filter.log.LogDetail.ALL;
@@ -17,5 +16,5 @@ public class LogoutSpec {
             .log(ALL)
             .expectStatusCode(400)
             .build();
-    public static RequestSpecification loginRequestSpec;
+
 }

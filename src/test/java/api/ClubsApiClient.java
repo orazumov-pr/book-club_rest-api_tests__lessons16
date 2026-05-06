@@ -4,6 +4,7 @@ import models.*;
 
 import static io.restassured.RestAssured.given;
 import static specs.ClubsSpec.*;
+import static specs.RegistrationSpecs.requestSpecification;
 
 public class ClubsApiClient {
 
@@ -14,7 +15,7 @@ public class ClubsApiClient {
     // ========== GET МЕТОДЫ (ЧТЕНИЕ) ==========
 
     public ClubsListResponseModel getClubsList() {
-        return given(clubsRequestSpec)
+        return given(requestSpecification)
                 .when()
                 .get(CLUBS_ENDPOINT)
                 .then()
@@ -24,7 +25,7 @@ public class ClubsApiClient {
     }
 
     public ClubsErrorResponseModel getClubByIdWithError(int clubId, int expectedStatusCode) {
-        return given(clubsRequestSpec)
+        return given(requestSpecification)
                 .pathParam("id", clubId)
                 .when()
                 .get(CLUB_BY_ID_ENDPOINT)
@@ -37,7 +38,7 @@ public class ClubsApiClient {
     // ========== POST МЕТОДЫ (СОЗДАНИЕ) ==========
 
     public CreateClubResponseModel createClub(String accessToken, CreateClubRequestModel request) {
-        return given(clubsRequestSpec)
+        return given(requestSpecification)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request)
                 .when()
@@ -49,7 +50,7 @@ public class ClubsApiClient {
     }
 
     public ClubsErrorResponseModel createClubWithError(String accessToken, CreateClubRequestModel request, int expectedStatusCode) {
-        var response = given(clubsRequestSpec)
+        var response = given(requestSpecification)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request)
                 .when()
@@ -76,7 +77,7 @@ public class ClubsApiClient {
     // ========== DELETE МЕТОДЫ ==========
 
     public void deleteClub(String accessToken, int clubId) {
-        given(clubsRequestSpec)
+        given(requestSpecification)
                 .header("Authorization", "Bearer " + accessToken)
                 .pathParam("id", clubId)
                 .when()
@@ -86,7 +87,7 @@ public class ClubsApiClient {
     }
 
     public ClubsErrorResponseModel deleteClubWithError(String accessToken, int clubId, int expectedStatusCode) {
-        var response = given(clubsRequestSpec)
+        var response = given(requestSpecification)
                 .header("Authorization", "Bearer " + accessToken)
                 .pathParam("id", clubId)
                 .when()

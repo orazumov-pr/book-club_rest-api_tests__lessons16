@@ -29,7 +29,6 @@ public class AuthApiClient {
         return given()
                 .log().all()
                 .contentType(JSON)
-                .basePath("/api/v1")
                 .body(loginData)
                 .when()
                 .post(LOGIN_ENDPOINT)
